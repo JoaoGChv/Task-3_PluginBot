@@ -1,0 +1,22 @@
+services:
+  ros2_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ros2_humble_dev
+    image: ros2_humble_dev:latest
+    environment:
+      - ROS_DOMAIN_ID=0
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./workspace:/root/workspace:rw
+      - ./shared_folder:/root/shared_folder:rw
+      - ./ros_packages:/root/workspace/src:rw
+      - ./launch_ws:/root/launch_ws:rw
+    network_mode: host
+    privileged: true
+    stdin_open: true
+    tty: true
+    command: /bin/bash
